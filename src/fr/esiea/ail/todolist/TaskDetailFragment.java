@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import fr.esiea.ail.todolist.dummy.DummyContent;
+import fr.esiea.ail.todolist.content.TaskManager;
+import fr.esiea.ail.todolist.model.Task;
 
 /**
  * A fragment representing a single Task detail screen. This fragment is either
@@ -24,7 +24,7 @@ public class TaskDetailFragment extends Fragment {
 	/**
 	 * The dummy content this fragment is presenting.
 	 */
-	private DummyContent.DummyItem mItem;
+	private Task mItem;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -41,9 +41,10 @@ public class TaskDetailFragment extends Fragment {
 			// Load the dummy content specified by the fragment
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
-			mItem = DummyContent.ITEM_MAP.get(getArguments().getString(
+			mItem = TaskManager.ITEM_MAP.get(getArguments().getString(
 					ARG_ITEM_ID));
 		}
+		System.out.println("Etape 2");
 	}
 
 	@Override
@@ -54,10 +55,11 @@ public class TaskDetailFragment extends Fragment {
 
 		// Show the dummy content as text in a TextView.
 		if (mItem != null) {
+			
 			((TextView) rootView.findViewById(R.id.task_detail))
-					.setText(mItem.content);
+					.setText("TROLL");
 		}
-
+		System.out.println("Etape 1");
 		return rootView;
 	}
 }

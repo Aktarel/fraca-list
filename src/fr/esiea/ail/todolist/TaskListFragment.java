@@ -6,8 +6,8 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import fr.esiea.ail.todolist.dummy.DummyContent;
+import fr.esiea.ail.todolist.content.TaskManager;
+import fr.esiea.ail.todolist.model.Task;
 
 /**
  * A list fragment representing a list of Tasks. This fragment also supports
@@ -71,9 +71,9 @@ public class TaskListFragment extends ListFragment {
 		super.onCreate(savedInstanceState);
 
 		// TODO: replace with a real list adapter.
-		setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+		setListAdapter(new ArrayAdapter<Task>(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, DummyContent.ITEMS));
+				android.R.id.text1, TaskManager.ITEMS));
 	}
 
 	@Override
@@ -116,7 +116,7 @@ public class TaskListFragment extends ListFragment {
 
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+		mCallbacks.onItemSelected(String.valueOf(TaskManager.ITEMS.get(position).getId()));
 	}
 
 	@Override
