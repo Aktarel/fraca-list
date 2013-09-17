@@ -1,8 +1,18 @@
 package fr.esiea.ail.todolist;
 
+import java.io.FileNotFoundException;
+
+import fr.esiea.ail.todolist.dao.TaskManager;
+import fr.esiea.ail.todolist.dao.impl.TaskManagerImpl;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.NavUtils;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 /**
  * An activity representing a list of Tasks. This activity has different
@@ -21,6 +31,7 @@ import android.support.v4.app.FragmentActivity;
  */
 public class TaskListActivity extends FragmentActivity implements
 		TaskListFragment.Callbacks {
+
 
 	/**
 	 * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -73,5 +84,28 @@ public class TaskListActivity extends FragmentActivity implements
 			detailIntent.putExtra(TaskDetailFragment.ARG_ITEM_ID, id);
 			startActivity(detailIntent);
 		}
+	}
+	
+	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			NavUtils.navigateUpTo(this,	new Intent(this, TaskListActivity.class));
+		case R.id.button_actionbar_add :
+			Log.e("myApp", "J'ai cliqué sur add >"+item.getItemId()+" == " +  R.id.button_actionbar_add+ "?");
+			startActivity( new Intent(this, TaskAddActivity.class));
+		case R.id.button_actionbar_settings :
+			Log.e("myApp", "J'ai cliqué sur settings >" +item.getItemId() +" == " +  R.id.button_actionbar_settings+ "?");
+			startActivity(new Intent(this, SettingListActivity.class));
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    // Inflate the menu items for use in the action bar
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main_activity_actions, menu);
+	    return super.onCreateOptionsMenu(menu);
 	}
 }

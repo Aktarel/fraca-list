@@ -3,6 +3,8 @@ package fr.esiea.ail.todolist;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -115,8 +117,6 @@ public class TaskListFragment extends ListFragment {
 			long id) {
 		super.onListItemClick(listView, view, position, id);
 
-		// Notify the active callbacks interface (the activity, if the
-		// fragment is attached to one) that an item has been selected.
 		mCallbacks.onItemSelected(String.valueOf(TaskManager.ITEMS.get(position).getId()));
 	}
 
@@ -134,8 +134,6 @@ public class TaskListFragment extends ListFragment {
 	 * given the 'activated' state when touched.
 	 */
 	public void setActivateOnItemClick(boolean activateOnItemClick) {
-		// When setting CHOICE_MODE_SINGLE, ListView will automatically
-		// give items the 'activated' state when touched.
 		getListView().setChoiceMode(
 				activateOnItemClick ? ListView.CHOICE_MODE_SINGLE
 						: ListView.CHOICE_MODE_NONE);
@@ -150,4 +148,5 @@ public class TaskListFragment extends ListFragment {
 
 		mActivatedPosition = position;
 	}
+	
 }
