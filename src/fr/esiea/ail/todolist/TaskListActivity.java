@@ -93,12 +93,17 @@ public class TaskListActivity extends FragmentActivity implements
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			NavUtils.navigateUpTo(this,	new Intent(this, TaskListActivity.class));
+			return true;
 		case R.id.button_actionbar_add :
-			Log.e("myApp", "J'ai cliqué sur add >"+item.getItemId()+" == " +  R.id.button_actionbar_add+ "?");
+			Log.e("myApp", "J'ai cliqué sur settings >" +item.getItemId() +" == " +  R.id.button_actionbar_settings+ "? "+ String.valueOf(R.id.button_actionbar_add==item.getItemId()));
 			startActivity( new Intent(this, TaskAddActivity.class));
+			return true;
 		case R.id.button_actionbar_settings :
-			Log.e("myApp", "J'ai cliqué sur settings >" +item.getItemId() +" == " +  R.id.button_actionbar_settings+ "?");
+			Log.e("myApp", "J'ai cliqué sur settings >" +item.getItemId() +" == " +  R.id.button_actionbar_settings+ "? "+String.valueOf(R.id.button_actionbar_settings==item.getItemId()));
 			startActivity(new Intent(this, SettingListActivity.class));
+			return true;
+		default : Log.e("myApp",item.getItemId() +" == " +  R.id.button_actionbar_settings+ "? "+String.valueOf(R.id.button_actionbar_settings==item.getItemId()));
+				
 		}
 		return super.onOptionsItemSelected(item);
 	}
