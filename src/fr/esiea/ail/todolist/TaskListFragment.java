@@ -56,6 +56,8 @@ public class TaskListFragment extends ListFragment {
 	private static Callbacks sDummyCallbacks = new Callbacks() {
 		@Override
 		public void onItemSelected(String id) {
+			
+			
 		}
 	};
 
@@ -69,7 +71,6 @@ public class TaskListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		// TODO: replace with a real list adapter.
 		setListAdapter(new ArrayAdapter<Task>(getActivity(),
 				android.R.layout.simple_list_item_activated_1,

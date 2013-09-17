@@ -4,8 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.MenuItem;
-
+import android.widget.Toast;
 /**
  * An activity representing a single Task detail screen. This activity is only
  * used on handset devices. On tablet-size devices, item details are presented
@@ -44,7 +45,13 @@ public class TaskDetailActivity extends FragmentActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.task_detail_container, fragment).commit();
 		}
+		
+		Toast.makeText(TaskDetailActivity.this,"Trolling time", Toast.LENGTH_LONG).show();
+		
+		
 	}
+
+	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

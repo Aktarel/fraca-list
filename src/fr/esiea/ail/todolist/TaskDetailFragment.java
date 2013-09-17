@@ -2,6 +2,7 @@ package fr.esiea.ail.todolist;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,13 @@ public class TaskDetailFragment extends Fragment {
 	 */
 	private Task mItem;
 
+	public Task getmItem() {
+		return mItem;
+	}
+
+	public void setmItem(Task mItem) {
+		this.mItem = mItem;
+	}
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes).
@@ -41,25 +49,23 @@ public class TaskDetailFragment extends Fragment {
 			// Load the dummy content specified by the fragment
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
-			mItem = TaskManager.ITEM_MAP.get(getArguments().getString(
-					ARG_ITEM_ID));
+			mItem = TaskManager.ITEM_MAP.get(Integer.parseInt(getArguments().getString(
+					ARG_ITEM_ID)));
+			
 		}
-		System.out.println("Etape 2");
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_task_detail,
+		View rootView = inflater.inflate(R.layout.activity_task_detail,
 				container, false);
-
 		// Show the dummy content as text in a TextView.
+		Log.e("myApp", mItem.toString());
 		if (mItem != null) {
-			
-			((TextView) rootView.findViewById(R.id.task_detail))
-					.setText("TROLL");
+			TextView t = (TextView)rootView.findViewById(R.id.nomContact);
+			t.setText(mItem.getName());;
 		}
-		System.out.println("Etape 1");
 		return rootView;
 	}
 }
