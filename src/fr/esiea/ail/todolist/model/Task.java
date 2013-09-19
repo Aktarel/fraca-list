@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package fr.esiea.ail.todolist.model;
 
 import java.util.Date;
@@ -73,3 +74,57 @@ public class Task {
 
 	
 }
+=======
+package fr.esiea.ail.todolist.model;
+
+import java.util.Date;
+
+public class Task {
+
+	private int id;
+	
+	private String name;
+	
+	private Date date;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	
+	public Task() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Task(int id, String name, Date date) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.date = date;
+	}
+	@Override
+	public String toString() {
+		return name;
+	}
+	
+}
+>>>>>>> dcb8d4095322737f5b6e34a2e61dc65b5b341a18

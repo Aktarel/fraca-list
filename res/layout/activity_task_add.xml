@@ -6,6 +6,7 @@
     tools:context=".TaskAddActivity"
     tools:ignore="MergeRootFrame" >
 
+<<<<<<< HEAD
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -80,6 +81,41 @@
              />
 
     </RelativeLayout>
+=======
+    <TextView
+        android:id="@+id/nomContact"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+    </LinearLayout>
+>>>>>>> dcb8d4095322737f5b6e34a2e61dc65b5b341a18
 
 </FrameLayout>
 

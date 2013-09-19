@@ -7,7 +7,10 @@
     <string name="title_actionbar_settings">Add Task</string>
     <string name="title_task_add">Add Task</string>
     <string name="title_setting_list">Settings</string>
+<<<<<<< HEAD
     <string name="pick_time">Set time</string>
     <string name="pick_date">Set a date</string>
+=======
+>>>>>>> dcb8d4095322737f5b6e34a2e61dc65b5b341a18
 
 </resources>
