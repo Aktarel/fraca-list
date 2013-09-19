@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Todo List</string>
+    <string name="title_task_detail">Task Detail</string>
+    <string name="title_actionbar_add">Add Task</string>
+    <string name="title_actionbar_settings">Add Task</string>
+    <string name="title_task_add">Add Task</string>
+    <string name="title_setting_list">Settings</string>
+    <string name="pick_time">Set time</string>
+    <string name="pick_date">Set a date</string>
+
+</resources>
