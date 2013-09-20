@@ -1,12 +1,5 @@
 package fr.esiea.ail.todolist;
 
-<<<<<<< HEAD
-=======
-import java.io.FileNotFoundException;
-
-import fr.esiea.ail.todolist.dao.TaskManager;
-import fr.esiea.ail.todolist.dao.impl.TaskManagerImpl;
->>>>>>> dcb8d4095322737f5b6e34a2e61dc65b5b341a18
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -15,10 +8,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-<<<<<<< HEAD
-=======
-import android.widget.Toast;
->>>>>>> dcb8d4095322737f5b6e34a2e61dc65b5b341a18
 
 /**
  * An activity representing a list of Tasks. This activity has different

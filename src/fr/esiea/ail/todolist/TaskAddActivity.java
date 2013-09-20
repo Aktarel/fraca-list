@@ -1,19 +1,15 @@
 package fr.esiea.ail.todolist;
 
-<<<<<<< HEAD
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
 
 import android.app.DialogFragment;
 import android.content.Context;
-=======
->>>>>>> dcb8d4095322737f5b6e34a2e61dc65b5b341a18
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
-<<<<<<< HEAD
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,12 +17,10 @@ import android.view.MenuItem;
 import android.view.View;
 import fr.esiea.ail.todolist.dao.impl.TaskManagerImpl;
 import fr.esiea.ail.todolist.model.Task;
-=======
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
->>>>>>> dcb8d4095322737f5b6e34a2e61dc65b5b341a18
 /**
  * An activity representing a single Task detail screen. This activity is only
  * used on handset devices. On tablet-size devices, item details are presented
@@ -45,15 +39,10 @@ public class TaskAddActivity extends FragmentActivity {
 
 	}
 
-<<<<<<< HEAD
-=======
-	@Override
->>>>>>> dcb8d4095322737f5b6e34a2e61dc65b5b341a18
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			NavUtils.navigateUpTo(this,new Intent(this, TaskListActivity.class));
-<<<<<<< HEAD
 			return true;
 		
 		case R.id.button_actionbar_settings :
@@ -73,11 +62,9 @@ public class TaskAddActivity extends FragmentActivity {
 			
 			return true;
 		}	
-=======
-		}
->>>>>>> dcb8d4095322737f5b6e34a2e61dc65b5b341a18
 		return super.onOptionsItemSelected(item);
-	}
+		}
+	
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.main_activity_actions, menu);
@@ -85,7 +72,6 @@ public class TaskAddActivity extends FragmentActivity {
 	    return super.onCreateOptionsMenu(menu);
 	}
 	
-<<<<<<< HEAD
 	
 	public void showTimePickerDialog(View v) {
 	    DialogFragment newFragment = new TimePickerFragment();
@@ -97,6 +83,4 @@ public class TaskAddActivity extends FragmentActivity {
 	    newFragment.show(getFragmentManager(), "datePicker");
 	}
 	
-=======
->>>>>>> dcb8d4095322737f5b6e34a2e61dc65b5b341a18
 }

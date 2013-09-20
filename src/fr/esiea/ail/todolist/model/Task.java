@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package fr.esiea.ail.todolist.model;
 
 import java.util.Date;
@@ -127,4 +126,3 @@ public class Task {
 	}
 	
 }
->>>>>>> dcb8d4095322737f5b6e34a2e61dc65b5b341a18

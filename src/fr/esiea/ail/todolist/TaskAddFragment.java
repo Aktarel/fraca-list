@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import fr.esiea.ail.todolist.content.TaskManager;
 import fr.esiea.ail.todolist.model.Task;
->>>>>>> dcb8d4095322737f5b6e34a2e61dc65b5b341a18
 
 /**
  * A fragment representing a single Task detail screen. This fragment is either
@@ -42,8 +41,4 @@ public class TaskAddFragment extends Fragment {
 				container, false);
 		return rootView;
 	}
-<<<<<<< HEAD
-
-=======
->>>>>>> dcb8d4095322737f5b6e34a2e61dc65b5b341a18
 }

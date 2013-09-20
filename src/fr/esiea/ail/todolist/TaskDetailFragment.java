@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package fr.esiea.ail.todolist;
 
 import android.os.Bundle;
@@ -142,4 +141,3 @@ public class TaskDetailFragment extends Fragment {
 		return rootView;
 	}
 }
->>>>>>> dcb8d4095322737f5b6e34a2e61dc65b5b341a18
