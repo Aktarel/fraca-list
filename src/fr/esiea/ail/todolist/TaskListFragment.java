@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package fr.esiea.ail.todolist;
 
 import android.app.Activity;
