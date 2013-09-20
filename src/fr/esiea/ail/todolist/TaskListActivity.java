@@ -1,5 +1,8 @@
 package fr.esiea.ail.todolist;
 
+import java.io.IOException;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -8,6 +11,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import fr.esiea.ail.todolist.content.TaskManager;
+import fr.esiea.ail.todolist.dao.impl.TaskManagerImpl;
 
 /**
  * An activity representing a list of Tasks. This activity has different
@@ -36,18 +41,23 @@ public class TaskListActivity extends FragmentActivity implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
+		fr.esiea.ail.todolist.dao.TaskManager manager;
+		try {
+			manager = new TaskManagerImpl(getApplicationContext(),Context.MODE_APPEND);
+			manager.init();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_list);
 
 		if (findViewById(R.id.task_detail_container) != null) {
-			// The detail container view will be present only in the
-			// large-screen layouts (res/values-large and
-			// res/values-sw600dp). If this view is present, then the
-			// activity should be in two-pane mode.
 			mTwoPane = true;
 
-			// In two-pane mode, list items should be given the
-			// 'activated' state when touched.
 			((TaskListFragment) getSupportFragmentManager().findFragmentById(
 					R.id.task_list)).setActivateOnItemClick(true);
 		}

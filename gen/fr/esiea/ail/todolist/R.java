@@ -16,24 +16,23 @@ public final class R {
         public static final int ic_launcher=0x7f020002;
     }
     public static final class id {
-        public static final int button_actionbar_add=0x7f070010;
-        public static final int button_actionbar_settings=0x7f070011;
+        public static final int button_actionbar_add=0x7f07000f;
+        public static final int button_actionbar_settings=0x7f070010;
         public static final int button_task_add=0x7f070002;
-        public static final int editText1=0x7f07000b;
-        public static final int label_task_comment=0x7f070008;
-        public static final int label_task_d=0x7f070005;
-        public static final int label_task_date=0x7f070003;
-        public static final int label_task_name=0x7f07000a;
+        public static final int label_task_comment=0x7f07000a;
+        public static final int label_task_date=0x7f070008;
+        public static final int label_task_name=0x7f070009;
         public static final int label_task_time=0x7f070007;
-        public static final int nomContact=0x7f07000d;
+        public static final int nomContact=0x7f07000c;
         public static final int setting_list_container=0x7f070000;
         public static final int task_add=0x7f070001;
-        public static final int task_detail=0x7f07000f;
-        public static final int task_detail_container=0x7f07000c;
-        public static final int task_list=0x7f07000e;
-        public static final int textField_date=0x7f070004;
-        public static final int textInput_task_comment=0x7f070006;
-        public static final int textInput_task_name=0x7f070009;
+        public static final int task_detail=0x7f07000e;
+        public static final int task_detail_container=0x7f07000b;
+        public static final int task_list=0x7f07000d;
+        public static final int textField_date=0x7f070003;
+        public static final int textField_time=0x7f070004;
+        public static final int textInput_task_comment=0x7f070005;
+        public static final int textInput_task_name=0x7f070006;
     }
     public static final class layout {
         public static final int activity_setting_list=0x7f030000;

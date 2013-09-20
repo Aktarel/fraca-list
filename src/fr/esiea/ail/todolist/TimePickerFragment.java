@@ -5,8 +5,12 @@ import java.util.Calendar;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.text.format.DateFormat;
+import android.webkit.WebView.FindListener;
+import android.widget.EditText;
 import android.widget.TimePicker;
 
 public class TimePickerFragment extends DialogFragment
@@ -25,6 +29,6 @@ public class TimePickerFragment extends DialogFragment
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        // Do something with the time chosen by the user
+    	((EditText)getActivity().findViewById(R.id.textField_time)).setText(String.valueOf(hourOfDay)+ ":"+String.valueOf(minute));
     }
 }

@@ -1,5 +1,6 @@
 package fr.esiea.ail.todolist.dao.impl;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import fr.esiea.ail.todolist.dao.TaskManager;
 import fr.esiea.ail.todolist.model.Task;
 import fr.esiea.ail.todolist.util.IcsConverter;
@@ -29,10 +31,13 @@ public class TaskManagerImpl implements TaskManager {
 	public void add(Task t) throws IOException {
 
 		StringBuilder csvFormat = new StringBuilder();
-		csvFormat.append(t.getId() + delimiter);
+		csvFormat.append(getFreeIndexSequence() + delimiter);
 		csvFormat.append(t.getName() + delimiter);
 		csvFormat.append(t.getDate().getTime() + delimiter + "\n");
 
+		Log.e("myApp", "On insère dans la base > "+csvFormat.toString());
+		
+		
 		fos.write(csvFormat.toString().getBytes());
 		fos.close();
 
@@ -49,19 +54,17 @@ public class TaskManagerImpl implements TaskManager {
 	}
 
 	public void update(Task t) throws IOException {
-		
+
 		List<Task> taches = list();
-		
-		for(Task tache : taches){
-			if(t.equals(tache)){
+
+		for (Task tache : taches) {
+			if (t.equals(tache)) {
 				taches.remove(tache);
 			}
 		}
-		
+
 		taches.add(t);
-	
-		
-		
+
 	}
 
 	public Task get(Task t) throws IOException {
@@ -85,21 +88,43 @@ public class TaskManagerImpl implements TaskManager {
 		while ((content = fis.read()) != -1) {
 			builder.append((char) content);
 		}
-
-		String[] mesObjets = builder.toString().split("\n");
-
-		for (int i = 0; i < mesObjets.length; i++) {
-			String[] mesAttributs = mesObjets[i].split("</fin>");
-			mesTaches
-			.add(new Task(Integer.parseInt(mesAttributs[0]),
-					mesAttributs[1], new Date(Long
-							.parseLong(mesAttributs[2]))));
-		}
-
 		fis.close();
+		
+		if (builder.length() != 0) {
+			String[] mesObjets = builder.toString().split("\n");
 
-		return mesTaches;
+			for (int i = 0; i < mesObjets.length; i++) {
+				String[] mesAttributs = mesObjets[i].split("</fin>");
+				mesTaches.add(new Task(Integer.parseInt(mesAttributs[0]),
+						mesAttributs[1], new Date(Long
+								.parseLong(mesAttributs[2]))));
+			}
+			return mesTaches;
+		}
+		else{
+			return new ArrayList<Task>();
+		}
+		
 
 	}
 
+	public int getFreeIndexSequence() throws IOException {
+		List<Task> taches = list();
+		if(!list().isEmpty()){
+			return taches.get(taches.size()).getId() + 1;
+		}
+		else{
+			return 0;
+		}
+		
+	}
+
+	public void init() throws IOException {
+		File file = new File(fichier);
+		if (!file.exists()) {
+			Log.e("myApp", "Le fichier n'existe pas");
+			file.createNewFile();
+		}
+		Log.e("myApp", "Test :" + getFreeIndexSequence());
+	}
 }

@@ -16,4 +16,5 @@ public interface TaskManager {
 	
 	public Task get(Task t)  throws IOException;
 	
+	public void init() throws IOException;
 }

@@ -1,5 +1,7 @@
 package fr.esiea.ail.todolist.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Task {
@@ -44,6 +46,15 @@ public class Task {
 		this.name = name;
 		this.date = date;
 	}
+
+	public Task(String name, String date) throws ParseException {
+		super();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+		
+		this.name = name;
+		this.date = sdf.parse(date);
+	}
+
 	@Override
 	public String toString() {
 		return id+" "+name+" "+date;
