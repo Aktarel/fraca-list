@@ -1,18 +1,25 @@
 package fr.esiea.ail.todolist;
 
 import java.io.IOException;
+import java.util.List;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.text.Editable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import fr.esiea.ail.todolist.content.TaskManager;
+import android.widget.EditText;
+import fr.esiea.ail.todolist.dao.TaskManager;
 import fr.esiea.ail.todolist.dao.impl.TaskManagerImpl;
+import fr.esiea.ail.todolist.model.Task;
+import fr.esiea.ail.todolist.util.TaskArrayAdapter;
 
 /**
  * An activity representing a list of Tasks. This activity has different
@@ -32,26 +39,19 @@ import fr.esiea.ail.todolist.dao.impl.TaskManagerImpl;
 public class TaskListActivity extends FragmentActivity implements
 		TaskListFragment.Callbacks {
 
+	private static final int SWIPE_MIN_DISTANCE = 120;
+	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
 	/**
 	 * Whether or not the activity is in two-pane mode, i.e. running on a tablet
 	 * device.
 	 */
 	private boolean mTwoPane;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
-		fr.esiea.ail.todolist.dao.TaskManager manager;
-		try {
-			manager = new TaskManagerImpl(getApplicationContext(),Context.MODE_APPEND);
-			manager.init();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_list);
 
@@ -61,61 +61,91 @@ public class TaskListActivity extends FragmentActivity implements
 			((TaskListFragment) getSupportFragmentManager().findFragmentById(
 					R.id.task_list)).setActivateOnItemClick(true);
 		}
+		
 
-		// TODO: If exposing deep links into your app, handle intents here.
 	}
 
 	/**
 	 * Callback method from {@link TaskListFragment.Callbacks} indicating that
 	 * the item with the given ID was selected.
+	 * 
+	 * 
 	 */
+	
 	@Override
 	public void onItemSelected(String id) {
-		if (mTwoPane) {
-			// In two-pane mode, show the detail view in this activity by
-			// adding or replacing the detail fragment using a
-			// fragment transaction.
-			Bundle arguments = new Bundle();
-			arguments.putString(TaskDetailFragment.ARG_ITEM_ID, id);
-			TaskDetailFragment fragment = new TaskDetailFragment();
-			fragment.setArguments(arguments);
-			getSupportFragmentManager().beginTransaction()
-					.replace(R.id.task_detail_container, fragment).commit();
-
-		} else {
+	
 			// In single-pane mode, simply start the detail activity
 			// for the selected item ID.
 			Intent detailIntent = new Intent(this, TaskDetailActivity.class);
 			detailIntent.putExtra(TaskDetailFragment.ARG_ITEM_ID, id);
 			startActivity(detailIntent);
-		}
 	}
-	
-	
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			NavUtils.navigateUpTo(this,	new Intent(this, TaskListActivity.class));
+			NavUtils.navigateUpTo(this,
+					new Intent(this, TaskListActivity.class));
 			return true;
-		case R.id.button_actionbar_add :
-			Log.e("myApp", "J'ai cliqué sur settings >" +item.getItemId() +" == " +  R.id.button_actionbar_settings+ "? "+ String.valueOf(R.id.button_actionbar_add==item.getItemId()));
-			startActivity( new Intent(this, TaskAddActivity.class));
+		case R.id.button_actionbar_add:
+			startActivity(new Intent(this, TaskAddActivity.class));
 			return true;
-		case R.id.button_actionbar_settings :
-			Log.e("myApp", "J'ai cliqué sur settings >" +item.getItemId() +" == " +  R.id.button_actionbar_settings+ "? "+String.valueOf(R.id.button_actionbar_settings==item.getItemId()));
-			startActivity(new Intent(this, SettingListActivity.class));
+		case R.id.button_actionbar_delete:
+			
+			AlertDialog dialog = new AlertDialog.Builder(this).create();
+	        dialog.setTitle("Confirmation");
+	        dialog.setMessage("Are you sure you want to remove those tasks ?");
+	        dialog.setCancelable(false);
+	        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface dialog, int buttonId) {
+	            	deleteTaskFromAdapter();
+	            }
+	        });
+	        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface dialog, int buttonId) {
+	            	
+	            }
+	        });
+	        dialog.setIcon(android.R.drawable.ic_dialog_alert);
+	        dialog.show();
+			
+		
 			return true;
-		default : Log.e("myApp",item.getItemId() +" == " +  R.id.button_actionbar_settings+ "? "+String.valueOf(R.id.button_actionbar_settings==item.getItemId()));
-				
+
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    // Inflate the menu items for use in the action bar
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.main_activity_actions, menu);
-	    return super.onCreateOptionsMenu(menu);
+		// Inflate the menu items for use in the action bar
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_activity_actions, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+
+	private void deleteTaskFromAdapter(){
+		TaskManager manager = null;
+		try {
+			manager = new TaskManagerImpl(getApplicationContext(),Context.MODE_PRIVATE);
+			
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		TaskListFragment fa = ((TaskListFragment) getSupportFragmentManager().findFragmentById(R.id.task_list));
+		List<Task> taskToDelete = ((TaskArrayAdapter)fa.getListAdapter()).getDeletedItems();
+		
+		for(Task t : taskToDelete){
+			
+			try {
+				manager.delete(t);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 	}
 }

@@ -1,6 +1,7 @@
 package fr.esiea.ail.todolist.dao;
 
 import java.io.IOException;
+import java.util.List;
 
 import fr.esiea.ail.todolist.model.Task;
 
@@ -16,5 +17,6 @@ public interface TaskManager {
 	
 	public Task get(Task t)  throws IOException;
 	
-	public void init() throws IOException;
+	public List<Task> list() throws IOException;
+	
 }

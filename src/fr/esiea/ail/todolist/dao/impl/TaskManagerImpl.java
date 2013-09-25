@@ -1,7 +1,7 @@
 package fr.esiea.ail.todolist.dao.impl;
 
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
@@ -12,32 +12,30 @@ import android.content.Context;
 import android.util.Log;
 import fr.esiea.ail.todolist.dao.TaskManager;
 import fr.esiea.ail.todolist.model.Task;
-import fr.esiea.ail.todolist.util.IcsConverter;
 
 public class TaskManagerImpl implements TaskManager {
 
-	private Context context;
 	private String fichier = new String("fracaList_datas");
-	private IcsConverter converter;
 	private String delimiter = "</fin>";
-	FileOutputStream fos;
+	private Context context;
+	private int mode;
 
 	public TaskManagerImpl(Context c, int mode) throws IOException {
 		this.context = c;
-		converter = new IcsConverter();
-		fos = context.openFileOutput(fichier, mode);
+		this.mode = mode;
 	}
 
 	public void add(Task t) throws IOException {
+
+		FileOutputStream fos = context.openFileOutput(fichier, mode);
 
 		StringBuilder csvFormat = new StringBuilder();
 		csvFormat.append(getFreeIndexSequence() + delimiter);
 		csvFormat.append(t.getName() + delimiter);
 		csvFormat.append(t.getDate().getTime() + delimiter + "\n");
 
-		Log.e("myApp", "On insère dans la base > "+csvFormat.toString());
-		
-		
+		Log.e("myApp", "On insère dans la base > " + csvFormat.toString());
+
 		fos.write(csvFormat.toString().getBytes());
 		fos.close();
 
@@ -47,10 +45,24 @@ public class TaskManagerImpl implements TaskManager {
 
 		List<Task> tasks = list();
 		tasks.remove(t);
+		addListe(tasks);
 
-		for (Task task : tasks)
-			add(task);
+	}
 
+	private void addListe(List<Task> tasks) throws IOException {
+
+		int modeAdd = Context.MODE_PRIVATE;
+		FileOutputStream fos = context.openFileOutput(fichier, modeAdd);
+
+		for (Task t : tasks) {
+			StringBuilder csvFormat = new StringBuilder();
+			csvFormat.append(getFreeIndexSequence() + delimiter);
+			csvFormat.append(t.getName() + delimiter);
+			csvFormat.append(t.getDate().getTime() + delimiter + "\n");
+			fos.write(csvFormat.toString().getBytes());
+		}
+
+		fos.close();
 	}
 
 	public void update(Task t) throws IOException {
@@ -72,7 +84,7 @@ public class TaskManagerImpl implements TaskManager {
 		List<Task> taches = list();
 		for (Task tache : taches) {
 			if (t.equals(tache)) {
-				return t;
+				return tache;
 			}
 		}
 		return new Task();
@@ -89,7 +101,7 @@ public class TaskManagerImpl implements TaskManager {
 			builder.append((char) content);
 		}
 		fis.close();
-		
+
 		if (builder.length() != 0) {
 			String[] mesObjets = builder.toString().split("\n");
 
@@ -100,31 +112,21 @@ public class TaskManagerImpl implements TaskManager {
 								.parseLong(mesAttributs[2]))));
 			}
 			return mesTaches;
-		}
-		else{
+		} else {
+
 			return new ArrayList<Task>();
 		}
-		
 
 	}
 
 	public int getFreeIndexSequence() throws IOException {
 		List<Task> taches = list();
-		if(!list().isEmpty()){
-			return taches.get(taches.size()).getId() + 1;
-		}
-		else{
+		if (!taches.isEmpty()) {
+			return taches.get(taches.size() - 1).getId() + 1;
+		} else {
 			return 0;
 		}
-		
+
 	}
 
-	public void init() throws IOException {
-		File file = new File(fichier);
-		if (!file.exists()) {
-			Log.e("myApp", "Le fichier n'existe pas");
-			file.createNewFile();
-		}
-		Log.e("myApp", "Test :" + getFreeIndexSequence());
-	}
 }

@@ -1,13 +1,21 @@
 package fr.esiea.ail.todolist;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import fr.esiea.ail.todolist.content.TaskManager;
+import fr.esiea.ail.todolist.dao.impl.TaskManagerImpl;
 import fr.esiea.ail.todolist.model.Task;
+import fr.esiea.ail.todolist.util.TaskArrayAdapter;
 
 /**
  * A list fragment representing a list of Tasks. This fragment also supports
@@ -56,8 +64,7 @@ public class TaskListFragment extends ListFragment {
 	private static Callbacks sDummyCallbacks = new Callbacks() {
 		@Override
 		public void onItemSelected(String id) {
-			
-			
+
 		}
 	};
 
@@ -71,10 +78,32 @@ public class TaskListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// TODO: replace with a real list adapter.
-		setListAdapter(new ArrayAdapter<Task>(getActivity(),
-				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, TaskManager.ITEMS));
+
+		try {
+
+			fr.esiea.ail.todolist.dao.TaskManager manager;
+			TaskArrayAdapter adapter;
+
+			manager = new TaskManagerImpl(
+					getActivity().getApplicationContext(), Context.MODE_APPEND);
+
+			if (manager.list().isEmpty()) {
+				adapter = new TaskArrayAdapter(getActivity(),
+						android.R.layout.simple_list_item_activated_1,
+						android.R.id.text1, new ArrayList<Task>());
+				setListAdapter(adapter);
+			} else {
+				adapter = new TaskArrayAdapter(getActivity(),
+						android.R.layout.simple_list_item_activated_1,
+						android.R.id.text1, manager.list());
+				setListAdapter(adapter);
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	@Override
@@ -115,7 +144,8 @@ public class TaskListFragment extends ListFragment {
 			long id) {
 		super.onListItemClick(listView, view, position, id);
 
-		mCallbacks.onItemSelected(String.valueOf(TaskManager.ITEMS.get(position).getId()));
+		mCallbacks.onItemSelected(String.valueOf(TaskManager.ITEMS
+				.get(position).getId()));
 	}
 
 	@Override
@@ -126,6 +156,7 @@ public class TaskListFragment extends ListFragment {
 			outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
 		}
 	}
+
 	/**
 	 * Turns on activate-on-click mode. When this mode is on, list items will be
 	 * given the 'activated' state when touched.
@@ -145,5 +176,18 @@ public class TaskListFragment extends ListFragment {
 
 		mActivatedPosition = position;
 	}
-	
+
+	@Override
+	public void onViewStateRestored(Bundle savedInstanceState) {
+		fr.esiea.ail.todolist.dao.TaskManager manager;
+		try {
+			manager = new TaskManagerImpl(
+					getActivity().getApplicationContext(), Context.MODE_APPEND);
+			Log.e("myApp", "Nous avons dans notre liste : " + manager.list());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		super.onViewStateRestored(savedInstanceState);
+	}
 }

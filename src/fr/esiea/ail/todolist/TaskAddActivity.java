@@ -2,6 +2,8 @@ package fr.esiea.ail.todolist;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import android.app.DialogFragment;
 import android.content.Intent;
@@ -28,6 +30,9 @@ import fr.esiea.ail.todolist.model.Task;
  */
 public class TaskAddActivity extends FragmentActivity {
 
+	private SimpleDateFormat timeFormat;
+	private SimpleDateFormat dateFormat;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,6 +42,15 @@ public class TaskAddActivity extends FragmentActivity {
 		final EditText nameTask = ((EditText) findViewById(R.id.textInput_task_name));
 		final EditText commentTask = ((EditText) findViewById(R.id.textInput_task_comment));
 
+		final EditText timeTask =((EditText) findViewById(R.id.textField_time));
+		final EditText dateTask =((EditText) findViewById(R.id.textField_date));
+		
+		Date today = new Date();
+		timeFormat = new SimpleDateFormat("HH:mm");
+		dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		timeTask.setText(timeFormat.format(today));
+		dateTask.setText(dateFormat.format(today));
+		
 		nameTask.setOnFocusChangeListener(new OnFocusChangeListener() {
 			public void onFocusChange(View arg0, boolean arg1) {
 				nameTask.setError(null);
@@ -56,8 +70,6 @@ public class TaskAddActivity extends FragmentActivity {
 		case android.R.id.home:
 			NavUtils.navigateUpTo(this,
 					new Intent(this, TaskListActivity.class));
-			return true;
-		case R.id.button_actionbar_settings:
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -95,6 +107,7 @@ public class TaskAddActivity extends FragmentActivity {
 				tmi = new TaskManagerImpl(getApplicationContext(), MODE_APPEND);
 				tmi.add(new Task(nameTask.getText().toString(),dateTask.getText().toString()));
 				Log.e("myApp", "On tente d'inserer la tache >"+nameTask.getText().toString() +" "+dateTask.getText().toString());
+				NavUtils.navigateUpTo(this,	new Intent(this, TaskListActivity.class));
 		}
 
 	}

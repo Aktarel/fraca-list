@@ -55,9 +55,14 @@ public class Task {
 		this.date = sdf.parse(date);
 	}
 
+	public Task(int id) {
+		super();
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
-		return id+" "+name+" "+date;
+		return name;
 	}
 
 	@Override

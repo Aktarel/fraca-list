@@ -1,13 +1,18 @@
 package fr.esiea.ail.todolist;
 
+import java.io.IOException;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
-import fr.esiea.ail.todolist.content.TaskManager;
+import fr.esiea.ail.todolist.dao.impl.TaskManagerImpl;
 import fr.esiea.ail.todolist.model.Task;
 
 /**
@@ -49,9 +54,15 @@ public class TaskDetailFragment extends Fragment {
 			// Load the dummy content specified by the fragment
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
-			mItem = TaskManager.ITEM_MAP.get(Integer.parseInt(getArguments().getString(
-					ARG_ITEM_ID)));
-			
+			try {
+				fr.esiea.ail.todolist.dao.TaskManager manager = new TaskManagerImpl(getActivity().getApplicationContext(), Context.MODE_PRIVATE);
+				mItem = manager.get(new Task((Integer)getArguments().get(ARG_ITEM_ID)));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+
 		}
 	}
 
@@ -61,7 +72,7 @@ public class TaskDetailFragment extends Fragment {
 		View rootView = inflater.inflate(fr.esiea.ail.todolist.R.layout.activity_task_detail,
 				container, false);
 		// Show the dummy content as text in a TextView.
-		Log.e("myApp", mItem.toString());
+		//Log.e("myApp", mItem.toString());
 		if (mItem != null) {
 			TextView t = (TextView)rootView.findViewById(fr.esiea.ail.todolist.R.id.nomContact);
 			t.setText(mItem.getName());;

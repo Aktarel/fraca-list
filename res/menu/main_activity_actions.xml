@@ -6,9 +6,9 @@
         android:showAsAction="ifRoom" 
           >
     </item>
-    <item android:id="@+id/button_actionbar_settings"
-        android:icon="@drawable/ic_action_settings"
-        android:title="@string/title_actionbar_settings" 
+    <item android:id="@+id/button_actionbar_delete"
+        android:icon="@drawable/ic_action_delete"
+        android:title="@string/title_actionbar_delete" 
          android:showAsAction="ifRoom" 
           >
     </item>

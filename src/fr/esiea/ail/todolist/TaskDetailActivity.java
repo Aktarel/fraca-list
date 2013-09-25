@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -67,8 +68,8 @@ public class TaskDetailActivity extends FragmentActivity {
 			// Create the detail fragment and add it to the activity
 			// using a fragment transaction.
 			Bundle arguments = new Bundle();
-			arguments.putString(TaskDetailFragment.ARG_ITEM_ID, getIntent()
-					.getStringExtra(TaskDetailFragment.ARG_ITEM_ID));
+			arguments.putInt(TaskDetailFragment.ARG_ITEM_ID,getIntent().getExtras().getInt(TaskDetailFragment.ARG_ITEM_ID) );
+			Log.e("myApp", "ID : "+arguments.getInt(TaskDetailFragment.ARG_ITEM_ID));
 			TaskDetailFragment fragment = new TaskDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
@@ -97,9 +98,6 @@ public class TaskDetailActivity extends FragmentActivity {
 					new Intent(this, TaskListActivity.class));
 		case R.id.button_actionbar_add :
 			startActivity( new Intent(this, TaskAddActivity.class));
-		case R.id.button_actionbar_settings :
-			startActivity(new Intent(this, SettingListActivity.class));
-			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -107,6 +105,7 @@ public class TaskDetailActivity extends FragmentActivity {
 	    // Inflate the menu items for use in the action bar
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.main_activity_actions, menu);
+		menu.removeItem(R.id.button_actionbar_delete);
 	    return super.onCreateOptionsMenu(menu);
 	}
 	
