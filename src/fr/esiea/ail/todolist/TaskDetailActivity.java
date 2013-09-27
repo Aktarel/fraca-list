@@ -76,7 +76,7 @@ public class TaskDetailActivity extends FragmentActivity {
 					.add(R.id.task_detail_container, fragment).commit();
 		}
 		
-		Toast.makeText(TaskDetailActivity.this,"Trolling time", Toast.LENGTH_LONG).show();
+		Toast.makeText(TaskDetailActivity.this,"Modifications", Toast.LENGTH_LONG).show();
 		
 		
 	}
