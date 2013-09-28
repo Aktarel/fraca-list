@@ -21,6 +21,9 @@ public class Task {
 	/* date task should be done */
 	private Date date;
 
+	private String comment ;
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -49,25 +52,28 @@ public class Task {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Task(int id, String name, Date date) {
+	public Task(int id, String name, Date date,String comment) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.date = date;
+		this.comment = comment;
 	}
 
-	public Task(String name, String date) throws ParseException {
+	public Task(String name, String date,String comment) throws ParseException {
 		super();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm");
 
 		this.name = name;
 		this.date = sdf.parse(date);
+		this.comment = comment;
 	}
 
 	public Task(int id) {
 		super();
 		this.id = id;
 	}
+
 
 	public String toString() {
 		return name;
@@ -91,6 +97,14 @@ public class Task {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 }

@@ -1,14 +1,21 @@
 package fr.esiea.ail.todolist;
 
+import java.io.IOException;
+import java.text.ParseException;
+
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
+import fr.esiea.ail.todolist.model.Task;
+
 /**
  * An activity representing a single Task detail screen. This activity is only
  * used on handset devices. On tablet-size devices, item details are presented
@@ -32,20 +39,18 @@ public class TaskDetailActivity extends FragmentActivity {
 			// Create the detail fragment and add it to the activity
 			// using a fragment transaction.
 			Bundle arguments = new Bundle();
-			arguments.putInt(TaskDetailFragment.ARG_ITEM_ID,getIntent().getExtras().getInt(TaskDetailFragment.ARG_ITEM_ID) );
-			Log.e("myApp", "ID : "+arguments.getInt(TaskDetailFragment.ARG_ITEM_ID));
+			arguments.putInt(TaskDetailFragment.ARG_ITEM_ID, getIntent()
+					.getExtras().getInt(TaskDetailFragment.ARG_ITEM_ID));
 			TaskDetailFragment fragment = new TaskDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.task_detail_container, fragment).commit();
 		}
-		
-		Toast.makeText(TaskDetailActivity.this,"Trolling time", Toast.LENGTH_LONG).show();
-		
-		
-	}
 
-	
+		Toast.makeText(TaskDetailActivity.this, "Trolling time",
+				Toast.LENGTH_LONG).show();
+
+	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -60,18 +65,72 @@ public class TaskDetailActivity extends FragmentActivity {
 			//
 			NavUtils.navigateUpTo(this,
 					new Intent(this, TaskListActivity.class));
-		case R.id.button_actionbar_add :
-			startActivity( new Intent(this, TaskAddActivity.class));
+		case R.id.button_actionbar_add:
+			startActivity(new Intent(this, TaskAddActivity.class));
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	public boolean onCreateOptionsMenu(Menu menu) {
-	    // Add menu items in top bar menu
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.main_activity_actions, menu);
-		menu.removeItem(R.id.button_actionbar_delete);
-	    return super.onCreateOptionsMenu(menu);
-	}
-	
-}
 
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Add menu items in top bar menu
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_activity_actions, menu);
+		menu.removeItem(R.id.button_actionbar_delete);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	public void showTimePickerDialog(View v) {
+		DialogFragment newFragment = new TimePickerFragment();
+		newFragment.show(getFragmentManager(), "timePicker");
+	}
+
+	public void showDatePickerDialog(View v) {
+		DialogFragment newFragment = new DatePickerFragment();
+		newFragment.show(getFragmentManager(), "datePicker");
+	}
+
+	public void updateTask(View view) throws IOException, ParseException {
+
+		TaskDetailFragment fa = ((TaskDetailFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.task_detail_container));
+
+		boolean validName = true, validComment = true;
+		EditText nameTask = ((EditText) findViewById(R.id.textInput_task_name_update));
+		EditText commentTask = ((EditText) findViewById(R.id.textInput_task_comment_update));
+		EditText dateTask = ((EditText) findViewById(R.id.textField_date_update));
+		EditText timeTask = ((EditText) findViewById(R.id.textField_time_update));
+
+		// Validate data and ask user to fill if empty
+		validName = validate(nameTask, "Task 'name' empty, please fill it!");
+		validComment = validate(commentTask,
+				"Task 'comment' empty, please fill it!");
+
+		if (validName && validComment) {
+			fa.updateTask(
+					new Task(nameTask.getText().toString(), dateTask.getText()
+							.toString() + " " + timeTask.getText().toString(),
+							commentTask.toString()), view);
+		}
+		// Back to List View
+		NavUtils.navigateUpTo(this, new Intent(this, TaskListActivity.class));
+	}
+
+	/**
+	 * Validate datas
+	 * 
+	 * @param et
+	 *            : text field affected
+	 * @param error
+	 *            : msg you want user to read if datas wrong
+	 * @return
+	 */
+	public boolean validate(EditText et, String error) {
+
+		if (et.length() == 0) {
+			et.setError(error);
+			return false;
+		}
+		return true;
+	}
+
+}

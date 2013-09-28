@@ -13,6 +13,7 @@ import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 import fr.esiea.ail.todolist.dao.TaskManager;
 import fr.esiea.ail.todolist.dao.impl.TaskManagerImpl;
 import fr.esiea.ail.todolist.model.Task;
@@ -55,8 +56,6 @@ public class TaskListActivity extends FragmentActivity implements
 	 * 
 	 * 
 	 */
-
-	@Override
 	public void onItemSelected(String id) {
 
 		// In single-pane mode, simply start the detail activity
@@ -66,7 +65,10 @@ public class TaskListActivity extends FragmentActivity implements
 		startActivity(detailIntent);
 	}
 
-	@Override
+	/**
+	 * Create dispatching between views whenever user click on bat top button in
+	 * TaskListActivity view
+	 */
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
@@ -77,7 +79,16 @@ public class TaskListActivity extends FragmentActivity implements
 			startActivity(new Intent(this, TaskAddActivity.class));
 			return true;
 		case R.id.button_actionbar_delete:
-
+			// Ask if user really want to delete tasks
+			final TaskListFragment fa = ((TaskListFragment) getSupportFragmentManager()
+					.findFragmentById(R.id.task_list));
+			final List<Task> taskToDelete = ((TaskArrayAdapter) fa.getListAdapter())
+					.getDeletedItems();
+			
+			if(taskToDelete.isEmpty()){
+				Toast.makeText(TaskListActivity.this,"You didn't selected datas, try swipe left to right to delete a task", Toast.LENGTH_LONG).show();
+			}
+			else{
 			AlertDialog dialog = new AlertDialog.Builder(this).create();
 			dialog.setTitle("Confirmation");
 			dialog.setMessage("Are you sure you want to remove those tasks ?");
@@ -91,13 +102,14 @@ public class TaskListActivity extends FragmentActivity implements
 			dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "No",
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int buttonId) {
-
+							
 						}
 					});
 			dialog.setIcon(android.R.drawable.ic_dialog_alert);
 			dialog.show();
 
 			return true;
+			}
 
 		}
 		return super.onOptionsItemSelected(item);
@@ -110,6 +122,11 @@ public class TaskListActivity extends FragmentActivity implements
 		return super.onCreateOptionsMenu(menu);
 	}
 
+	/**
+	 * 
+	 * Method called in TaskArrayAdapter whenever user want to delete task
+	 * 
+	 */
 	private void deleteTaskFromAdapter() {
 		TaskManager manager = null;
 		try {
@@ -132,6 +149,6 @@ public class TaskListActivity extends FragmentActivity implements
 				e.printStackTrace();
 			}
 		}
-
 	}
+
 }

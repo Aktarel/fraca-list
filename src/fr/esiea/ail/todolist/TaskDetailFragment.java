@@ -1,6 +1,7 @@
 package fr.esiea.ail.todolist;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -66,7 +67,6 @@ public class TaskDetailFragment extends Fragment {
 		}
 	}
 
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(
@@ -75,11 +75,27 @@ public class TaskDetailFragment extends Fragment {
 		// Show the dummy content as text in a TextView.
 		// Log.e("myApp", mItem.toString());
 		if (mItem != null) {
-			TextView t = (TextView) rootView
-					.findViewById(fr.esiea.ail.todolist.R.id.nomContact);
-			t.setText(mItem.getName());
-			;
+			TextView commentUpdateTaskView = (TextView) rootView.findViewById(fr.esiea.ail.todolist.R.id.textInput_task_comment_update);
+			TextView nameUpdateTaskView = (TextView) rootView.findViewById(fr.esiea.ail.todolist.R.id.textInput_task_name_update);
+			TextView dateUpdateTaskView = (TextView) rootView.findViewById(fr.esiea.ail.todolist.R.id.textField_date_update);
+			TextView timeUpdateTaskView = (TextView) rootView.findViewById(fr.esiea.ail.todolist.R.id.textField_time_update);
+			SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+			
+			commentUpdateTaskView.setText(mItem.getComment());
+			nameUpdateTaskView.setText(mItem.getName());
+			dateUpdateTaskView.setText(dateFormat.format(mItem.getDate()));
+			timeUpdateTaskView.setText(timeFormat.format(mItem.getDate()));
+			
 		}
 		return rootView;
+	}
+
+	public void updateTask(Task taskToUpdate,View view) throws IOException{
+		
+		TaskManagerImpl tmi = null;
+		tmi = new TaskManagerImpl(getActivity(), Context.MODE_APPEND);
+		tmi.update(taskToUpdate);
+	
 	}
 }

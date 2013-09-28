@@ -32,8 +32,16 @@ public class TimePickerFragment extends DialogFragment implements
 	}
 
 	public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-		((EditText) getActivity().findViewById(R.id.textField_time))
-				.setText(String.valueOf(hourOfDay) + ":"
+		
+		if(((EditText) getActivity().findViewById(R.id.textField_time))!=null){
+			//for add time field
+			((EditText) getActivity().findViewById(R.id.textField_time)).setText(String.valueOf(hourOfDay) + ":"
 						+ String.valueOf(minute));
+		}
+		else{
+			//for update time field
+			((EditText) getActivity().findViewById(R.id.textField_time_update)).setText(String.valueOf(hourOfDay) + ":"
+					+ String.valueOf(minute));
+		}
 	}
 }

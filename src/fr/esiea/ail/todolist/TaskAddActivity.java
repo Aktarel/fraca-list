@@ -6,11 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -113,23 +113,24 @@ public class TaskAddActivity extends FragmentActivity {
 	 * @throws ParseException
 	 */
 	public void addTask(View view) throws IOException, ParseException {
-		TaskManagerImpl tmi = null;
+
 		boolean validName = true, validComment = true;
+		TaskManagerImpl tmi = null;
 		EditText nameTask = ((EditText) findViewById(R.id.textInput_task_name));
 		EditText commentTask = ((EditText) findViewById(R.id.textInput_task_comment));
 		EditText dateTask = ((EditText) findViewById(R.id.textField_date));
+		EditText timeTask = ((EditText) findViewById(R.id.textField_time));
 
 		// Validate data and ask user to fill if empty
 		validName = validate(nameTask, "Task 'name' empty, please fill it!");
 		validComment = validate(commentTask,
 				"Task 'comment' empty, please fill it!");
 		if (validName && validComment) {
-			tmi = new TaskManagerImpl(getApplicationContext(), MODE_APPEND);
+			tmi = new TaskManagerImpl(getApplicationContext(),
+					Context.MODE_APPEND);
 			tmi.add(new Task(nameTask.getText().toString(), dateTask.getText()
-					.toString()));
-			Log.e("myApp", "On tente d'inserer la tache >"
-					+ nameTask.getText().toString() + " "
-					+ dateTask.getText().toString());
+					.toString() + " " + timeTask.getText().toString(),
+					commentTask.getText().toString()));
 			NavUtils.navigateUpTo(this,
 					new Intent(this, TaskListActivity.class));
 		}

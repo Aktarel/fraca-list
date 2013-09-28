@@ -1,5 +1,6 @@
 package fr.esiea.ail.todolist.dao.impl;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import fr.esiea.ail.todolist.dao.TaskManager;
 import fr.esiea.ail.todolist.model.Task;
 
@@ -34,10 +36,18 @@ public class TaskManagerImpl implements TaskManager {
 	/* Specify if you append or erase in the data file */
 	private int mode;
 
-	public TaskManagerImpl(Context c, int mode) throws IOException {
+	public TaskManagerImpl(Context c , int mode) throws IOException {
+		
 		this.context = c;
 		this.mode = mode;
+		
+		File file = c.getFileStreamPath(fichier);
+	       if(!file.exists()){
+	           file.createNewFile();
+	       }
 	}
+	
+	
 
 	/**
 	 * Add new task {@link Task}
@@ -52,7 +62,8 @@ public class TaskManagerImpl implements TaskManager {
 		StringBuilder csvFormat = new StringBuilder();
 		csvFormat.append(getFreeIndexSequence() + delimiter);
 		csvFormat.append(t.getName() + delimiter);
-		csvFormat.append(t.getDate().getTime() + delimiter + "\n");
+		csvFormat.append(t.getDate().getTime() + delimiter);
+		csvFormat.append(t.getComment() + delimiter + "\n");
 
 		fos.write(csvFormat.toString().getBytes());
 		fos.close();
@@ -90,7 +101,8 @@ public class TaskManagerImpl implements TaskManager {
 			StringBuilder csvFormat = new StringBuilder();
 			csvFormat.append(getFreeIndexSequence() + delimiter);
 			csvFormat.append(t.getName() + delimiter);
-			csvFormat.append(t.getDate().getTime() + delimiter + "\n");
+			csvFormat.append(t.getDate().getTime() + delimiter);
+			csvFormat.append(t.getComment() + delimiter + "\n");
 			fos.write(csvFormat.toString().getBytes());
 		}
 
@@ -99,14 +111,17 @@ public class TaskManagerImpl implements TaskManager {
 
 	/**
 	 * Update a Task object
+	 * @param idOldTask 
 	 * 
 	 */
 	public void update(Task t) throws IOException {
 
 		List<Task> tasks = list();
 
+		Log.e("myApp", "update tache :"+t.getId()+" "+t.getName());
+		
 		for (Task task : tasks) {
-			if (t.equals(task)) {
+			if (t.getId()==task.getId()) {
 				tasks.remove(task);
 			}
 		}
@@ -122,6 +137,7 @@ public class TaskManagerImpl implements TaskManager {
 	 */
 	public Task get(Task t) throws IOException {
 
+		
 		List<Task> taches = list();
 		for (Task tache : taches) {
 			if (t.equals(tache)) {
@@ -163,7 +179,8 @@ public class TaskManagerImpl implements TaskManager {
 				// </fin> is the delimiter between attributes
 				String[] attributes = myObjects[i].split("</fin>");
 				tasks.add(new Task(Integer.parseInt(attributes[0]),
-						attributes[1], new Date(Long.parseLong(attributes[2]))));
+						attributes[1], new Date(Long.parseLong(attributes[2])),
+						attributes[3]));
 			}
 			return tasks;
 		} else {

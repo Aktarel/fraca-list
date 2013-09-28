@@ -6,11 +6,101 @@
     tools:context=".TaskDetailActivity"
     tools:ignore="MergeRootFrame" >
 
-    <TextView
-        android:id="@+id/nomContact"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:textSize="16sp" />
+        android:layout_height="match_parent" >
+
+        <Button
+            android:id="@+id/button_task_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:onClick="updateTask"
+            android:text="Update Task" />
+
+        <EditText
+            android:id="@+id/textField_date_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:ems="10"
+            android:focusable="false"
+            android:onClick="showDatePickerDialog"
+            android:text="@string/pick_date" />
+
+        <EditText
+            android:id="@+id/textField_time_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textField_date_update"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="27dp"
+            android:ems="10"
+            android:focusable="false"
+            android:onClick="showTimePickerDialog"
+            android:text="@string/pick_time" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/textInput_task_comment_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textField_date_update"
+            android:layout_below="@+id/textField_date_update"
+            android:layout_marginTop="22dp"
+            android:ems="10" />
+
+        <EditText
+            android:id="@+id/textInput_task_name_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="41dp"
+            android:ems="10" />
+
+        <TextView
+            android:id="@+id/label_task_date_udpate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="18dp"
+            android:layout_toLeftOf="@+id/textField_date_update"
+            android:text="Task Date" />
+
+        <TextView
+            android:id="@+id/label_task_comment_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textInput_task_comment_update"
+            android:layout_alignBottom="@+id/textInput_task_comment_update"
+            android:layout_alignRight="@+id/label_task_date_udpate"
+            android:text="Comment" />
+
+        <TextView
+            android:id="@+id/label_task_name_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textInput_task_name_update"
+            android:layout_alignBottom="@+id/textInput_task_name_update"
+            android:layout_alignRight="@+id/label_task_date_udpate"
+            android:text="Task name" />
+
+        <TextView
+            android:id="@+id/label_task_time_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textField_time_update"
+            android:layout_alignBottom="@+id/textField_time_update"
+            android:layout_alignRight="@+id/label_task_date_udpate"
+            android:text="Task Time" />
+
+    </RelativeLayout>
 
 </FrameLayout>
 
