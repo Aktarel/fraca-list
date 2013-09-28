@@ -13,6 +13,7 @@ import fr.esiea.ail.todolist.model.Task;
  * Android template wizards.
  * <p>
  * TODO: Replace all uses of this class before publishing your app.
+ * @deprecated : do not use it , old way to get object in memory (map)
  */
 public class TaskManager {
 

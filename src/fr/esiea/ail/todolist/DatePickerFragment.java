@@ -9,6 +9,13 @@ import android.os.Bundle;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+/**
+ * 
+ * Dialog use in add form You can choose from a date android default component
+ * 
+ * @author Todolist Team
+ * 
+ */
 public class DatePickerFragment extends DialogFragment implements
 		DatePickerDialog.OnDateSetListener {
 
@@ -25,6 +32,8 @@ public class DatePickerFragment extends DialogFragment implements
 	}
 
 	public void onDateSet(DatePicker view, int year, int month, int day) {
-		((EditText)getActivity().findViewById(R.id.textField_date)).setText(String.valueOf(day)+ "/"+String.valueOf(month)+"/"+String.valueOf(year));
+		((EditText) getActivity().findViewById(R.id.textField_date))
+				.setText(String.valueOf(day) + "/" + String.valueOf(month)
+						+ "/" + String.valueOf(year));
 	}
 }

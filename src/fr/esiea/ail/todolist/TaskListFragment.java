@@ -7,12 +7,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import fr.esiea.ail.todolist.content.TaskManager;
 import fr.esiea.ail.todolist.dao.impl.TaskManagerImpl;
 import fr.esiea.ail.todolist.model.Task;
 import fr.esiea.ail.todolist.util.TaskArrayAdapter;
@@ -106,7 +102,6 @@ public class TaskListFragment extends ListFragment {
 
 	}
 
-	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
@@ -118,7 +113,9 @@ public class TaskListFragment extends ListFragment {
 		}
 	}
 
-	@Override
+	/**
+	 * On init TaskListActivity
+	 */
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 
@@ -131,7 +128,6 @@ public class TaskListFragment extends ListFragment {
 		mCallbacks = (Callbacks) activity;
 	}
 
-	@Override
 	public void onDetach() {
 		super.onDetach();
 
@@ -139,16 +135,6 @@ public class TaskListFragment extends ListFragment {
 		mCallbacks = sDummyCallbacks;
 	}
 
-	@Override
-	public void onListItemClick(ListView listView, View view, int position,
-			long id) {
-		super.onListItemClick(listView, view, position, id);
-
-		mCallbacks.onItemSelected(String.valueOf(TaskManager.ITEMS
-				.get(position).getId()));
-	}
-
-	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		if (mActivatedPosition != ListView.INVALID_POSITION) {
@@ -177,13 +163,14 @@ public class TaskListFragment extends ListFragment {
 		mActivatedPosition = position;
 	}
 
-	@Override
+	/**
+	 * Whenever you come back from screen, you can add some piece of codes
+	 */
 	public void onViewStateRestored(Bundle savedInstanceState) {
 		fr.esiea.ail.todolist.dao.TaskManager manager;
 		try {
 			manager = new TaskManagerImpl(
 					getActivity().getApplicationContext(), Context.MODE_APPEND);
-			Log.e("myApp", "Nous avons dans notre liste : " + manager.list());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -4,12 +4,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Task is our main model class It represents a Task : something we want to do
+ * 
+ * @author Todo-List TEAM
+ * 
+ */
 public class Task {
 
+	/* Id of our Task */
 	private int id;
-	
+
+	/* Name of task */
 	private String name;
-	
+
+	/* date task should be done */
 	private Date date;
 
 	public int getId() {
@@ -35,7 +44,7 @@ public class Task {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
+
 	public Task() {
 		// TODO Auto-generated constructor stub
 	}
@@ -50,7 +59,7 @@ public class Task {
 	public Task(String name, String date) throws ParseException {
 		super();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
-		
+
 		this.name = name;
 		this.date = sdf.parse(date);
 	}
@@ -60,12 +69,10 @@ public class Task {
 		this.id = id;
 	}
 
-	@Override
 	public String toString() {
 		return name;
 	}
 
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -73,7 +80,6 @@ public class Task {
 		return result;
 	}
 
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -87,6 +93,4 @@ public class Task {
 		return true;
 	}
 
-	
 }
-
