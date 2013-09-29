@@ -7,6 +7,7 @@ import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
@@ -33,14 +34,24 @@ public class TimePickerFragment extends DialogFragment implements
 
 	public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-		if (((EditText) getActivity().findViewById(R.id.textField_time)) != null) {
-			// for add time field
-			((EditText) getActivity().findViewById(R.id.textField_time))
-					.setText(String.valueOf(hourOfDay) + ":"
-							+ String.valueOf(minute));
-		} else {
+
+		if (getActivity().getClass().equals(TaskDetailActivity.class)) {
 			// for update time field
 			((EditText) getActivity().findViewById(R.id.textField_time_update))
+					.setText(String.valueOf(hourOfDay) + ":"
+							+ String.valueOf(minute));
+			if (minute < 10) {
+				((EditText) getActivity().findViewById(
+						R.id.textField_time_update)).setText(String
+						.valueOf(hourOfDay) + ":0" + String.valueOf(minute));
+			} else {
+				((EditText) getActivity().findViewById(
+						R.id.textField_time_update)).setText(String
+						.valueOf(hourOfDay) + ":" + String.valueOf(minute));
+			}
+		} else {
+			// for add time field
+			((EditText) getActivity().findViewById(R.id.textField_time))
 					.setText(String.valueOf(hourOfDay) + ":"
 							+ String.valueOf(minute));
 			if (minute < 10) {
@@ -53,5 +64,6 @@ public class TimePickerFragment extends DialogFragment implements
 								+ String.valueOf(minute));
 			}
 		}
+
 	}
 }

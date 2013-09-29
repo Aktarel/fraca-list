@@ -118,15 +118,16 @@ public class TaskManagerImpl implements TaskManager {
 
 		List<Task> tasks = list();
 
-		Log.e("myApp", "update tache :"+t.getId()+" "+t.getName());
-		
 		for (Task task : tasks) {
+			
 			if (t.getId()==task.getId()) {
+				Log.e("myApp","Delete de "+task.getId()+" "+task.getName()+" "+task.getComment());
 				tasks.remove(task);
+				delete(task);
+				break;
 			}
 		}
-
-		tasks.add(t);
+		add(t);
 
 	}
 
@@ -177,11 +178,15 @@ public class TaskManagerImpl implements TaskManager {
 				// Format is simple and should respect this architecture :
 				// value1</fin>value2</fin>value3</fin>valueN</fin>
 				// </fin> is the delimiter between attributes
+				
 				String[] attributes = myObjects[i].split("</fin>");
+
 				tasks.add(new Task(Integer.parseInt(attributes[0]),
 						attributes[1], new Date(Long.parseLong(attributes[2])),
 						attributes[3]));
 			}
+			
+			
 			return tasks;
 		} else {
 

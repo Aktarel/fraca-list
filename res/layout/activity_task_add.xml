@@ -42,8 +42,6 @@
             android:focusable="false"
             android:onClick="showTimePickerDialog"
             android:text="@string/pick_time" >
-
-            <requestFocus />
         </EditText>
 
         <EditText

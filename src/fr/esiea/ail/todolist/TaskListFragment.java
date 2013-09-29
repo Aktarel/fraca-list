@@ -60,7 +60,6 @@ public class TaskListFragment extends ListFragment {
 	private static Callbacks sDummyCallbacks = new Callbacks() {
 		@Override
 		public void onItemSelected(String id) {
-
 		}
 	};
 
@@ -71,7 +70,6 @@ public class TaskListFragment extends ListFragment {
 	public TaskListFragment() {
 	}
 
-	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -163,18 +161,4 @@ public class TaskListFragment extends ListFragment {
 		mActivatedPosition = position;
 	}
 
-	/**
-	 * Whenever you come back from screen, you can add some piece of codes
-	 */
-	public void onViewStateRestored(Bundle savedInstanceState) {
-		fr.esiea.ail.todolist.dao.TaskManager manager;
-		try {
-			manager = new TaskManagerImpl(
-					getActivity().getApplicationContext(), Context.MODE_APPEND);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		super.onViewStateRestored(savedInstanceState);
-	}
 }

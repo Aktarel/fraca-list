@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -60,8 +61,11 @@ public class TaskListActivity extends FragmentActivity implements
 
 		// In single-pane mode, simply start the detail activity
 		// for the selected item ID.
+		final TaskListFragment fa = ((TaskListFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.task_list));
+		Task task = ((TaskArrayAdapter) fa.getListAdapter()).getItem(Integer.parseInt(id));
 		Intent detailIntent = new Intent(this, TaskDetailActivity.class);
-		detailIntent.putExtra(TaskDetailFragment.ARG_ITEM_ID, id);
+		detailIntent.putExtra(TaskDetailFragment.ARG_ITEM_ID, task.getId());
 		startActivity(detailIntent);
 	}
 
@@ -86,7 +90,7 @@ public class TaskListActivity extends FragmentActivity implements
 					.getDeletedItems();
 			
 			if(taskToDelete.isEmpty()){
-				Toast.makeText(TaskListActivity.this,"You didn't selected datas, try swipe left to right to delete a task", Toast.LENGTH_LONG).show();
+				Toast.makeText(TaskListActivity.this,"You didn't selected datas, try swipe left to right if you want to select a task", Toast.LENGTH_LONG).show();
 			}
 			else{
 			AlertDialog dialog = new AlertDialog.Builder(this).create();

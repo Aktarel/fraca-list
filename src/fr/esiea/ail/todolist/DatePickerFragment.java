@@ -7,7 +7,9 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -18,7 +20,6 @@ import android.widget.EditText;
  * @author Todolist Team
  * 
  */
-@SuppressLint("ValidFragment")
 public class DatePickerFragment extends DialogFragment implements
 		DatePickerDialog.OnDateSetListener {
 
@@ -35,7 +36,7 @@ public class DatePickerFragment extends DialogFragment implements
 		final Calendar c = Calendar.getInstance();
 		year = c.get(Calendar.YEAR);
 		month = c.get(Calendar.MONTH);
-		day = c.get(Calendar.DAY_OF_MONTH + 1);
+		day = c.get(Calendar.DAY_OF_MONTH);
 		
 		// Create a new instance of DatePickerDialog and return it
 		return new DatePickerDialog(getActivity(), this, year, month, day);
@@ -43,15 +44,18 @@ public class DatePickerFragment extends DialogFragment implements
 
 	public void onDateSet(DatePicker view, int year, int month, int day) {
 		
-		if(((EditText) getActivity().findViewById(R.id.textField_date)!=null)){
-				((EditText) getActivity().findViewById(R.id.textField_date))
-				.setText(String.valueOf(month) + "/" + String.valueOf(day)
-						+ "/" + String.valueOf(year));
+		EditText dateTask ;
+		if (getActivity().getClass().equals(TaskDetailActivity.class)) {
+			dateTask =((EditText) getActivity().findViewById(R.id.textField_date_update));
+			dateTask.setText(String.valueOf(month+1) + "/" + String.valueOf(day)
+					+ "/" + String.valueOf(year));
+			
 		}
 		else{
-			((EditText) getActivity().findViewById(R.id.textField_date_update))
-			.setText(String.valueOf(month) + "/" + String.valueOf(day)
+			dateTask =((EditText) getActivity().findViewById(R.id.textField_date));
+			dateTask.setText(String.valueOf(month+1) + "/" + String.valueOf(day)
 					+ "/" + String.valueOf(year));
+			
 		}
 	}
 }

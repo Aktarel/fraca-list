@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -46,7 +47,7 @@ public class TaskDetailActivity extends FragmentActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.task_detail_container, fragment).commit();
 		}
-		Toast.makeText(TaskDetailActivity.this,"Modifications", Toast.LENGTH_LONG).show();
+		
 		
 		
 
@@ -65,8 +66,10 @@ public class TaskDetailActivity extends FragmentActivity {
 			//
 			NavUtils.navigateUpTo(this,
 					new Intent(this, TaskListActivity.class));
+			return true;
 		case R.id.button_actionbar_add:
 			startActivity(new Intent(this, TaskAddActivity.class));
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -104,14 +107,16 @@ public class TaskDetailActivity extends FragmentActivity {
 		validName = validate(nameTask, "Task 'name' empty, please fill it!");
 		validComment = validate(commentTask,
 				"Task 'comment' empty, please fill it!");
-
+		Log.e("myApp", "Update ");
 		if (validName && validComment) {
 			fa.updateTask(
 					new Task(nameTask.getText().toString(), dateTask.getText()
 							.toString() + " " + timeTask.getText().toString(),
-							commentTask.toString()), view);
+							commentTask.getText().toString()), view);
+			
 		}
-		// Back to List View
+
+	
 		NavUtils.navigateUpTo(this, new Intent(this, TaskListActivity.class));
 	}
 

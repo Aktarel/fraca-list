@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -141,6 +142,7 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> implements
 	public void onClick(View v, Task t) {
 		TaskListActivity activity = (TaskListActivity) v.getContext();
 		Intent detailIntent = new Intent(activity, TaskDetailActivity.class);
+		Log.e("myApp", "Task : "+t.getId()+" "+t.getName());
 		detailIntent.putExtra(TaskDetailFragment.ARG_ITEM_ID, t.getId());
 		activity.startActivity(detailIntent);
 	}

@@ -6,7 +6,7 @@
     tools:context=".TaskDetailActivity"
     tools:ignore="MergeRootFrame" >
 
-    <RelativeLayout
+      <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
@@ -18,7 +18,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:onClick="updateTask"
-            android:text="Update Task" />
+            android:text="Update my task" />
 
         <EditText
             android:id="@+id/textField_date_update"
@@ -42,8 +42,6 @@
             android:focusable="false"
             android:onClick="showTimePickerDialog"
             android:text="@string/pick_time" >
-
-            <requestFocus />
         </EditText>
 
         <EditText
@@ -65,7 +63,25 @@
             android:ems="10" />
 
         <TextView
-            android:id="@+id/label_task_date_udpate"
+            android:id="@+id/label_task_time_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textField_time_update"
+            android:layout_alignBottom="@+id/textField_time_update"
+            android:layout_alignRight="@+id/label_task_date_update"
+            android:text="Task Time" />
+
+        <TextView
+            android:id="@+id/label_task_name_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textInput_task_name_update"
+            android:layout_alignBottom="@+id/textInput_task_name_update"
+            android:layout_alignRight="@+id/label_task_time_update"
+            android:text="Task name" />
+
+        <TextView
+            android:id="@+id/label_task_date_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -79,28 +95,11 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textInput_task_comment_update"
             android:layout_alignBottom="@+id/textInput_task_comment_update"
-            android:layout_alignRight="@+id/label_task_date_udpate"
+            android:layout_alignRight="@+id/label_task_date_update"
             android:text="Comment" />
 
-        <TextView
-            android:id="@+id/label_task_name_update"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textInput_task_name_update"
-            android:layout_alignBottom="@+id/textInput_task_name_update"
-            android:layout_alignRight="@+id/label_task_date_udpate"
-            android:text="Task name" />
-
-        <TextView
-            android:id="@+id/label_task_time_update"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textField_time_update"
-            android:layout_alignBottom="@+id/textField_time_update"
-            android:layout_alignRight="@+id/label_task_date_udpate"
-            android:text="Task Time" />
-
     </RelativeLayout>
+
 
 </FrameLayout>
 

@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class TaskDetailFragment extends Fragment {
 				fr.esiea.ail.todolist.dao.TaskManager manager = new TaskManagerImpl(
 						getActivity().getApplicationContext(),
 						Context.MODE_PRIVATE);
+				
 				mItem = manager.get(new Task((Integer) getArguments().get(
 						ARG_ITEM_ID)));
 			} catch (IOException e) {
@@ -69,16 +71,13 @@ public class TaskDetailFragment extends Fragment {
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(
-				fr.esiea.ail.todolist.R.layout.activity_task_detail, container,
-				false);
 		// Show the dummy content as text in a TextView.
 		// Log.e("myApp", mItem.toString());
 		if (mItem != null) {
-			TextView commentUpdateTaskView = (TextView) rootView.findViewById(fr.esiea.ail.todolist.R.id.textInput_task_comment_update);
-			TextView nameUpdateTaskView = (TextView) rootView.findViewById(fr.esiea.ail.todolist.R.id.textInput_task_name_update);
-			TextView dateUpdateTaskView = (TextView) rootView.findViewById(fr.esiea.ail.todolist.R.id.textField_date_update);
-			TextView timeUpdateTaskView = (TextView) rootView.findViewById(fr.esiea.ail.todolist.R.id.textField_time_update);
+			TextView commentUpdateTaskView = (TextView) getActivity().findViewById(fr.esiea.ail.todolist.R.id.textInput_task_comment_update);
+			TextView nameUpdateTaskView = (TextView) getActivity().findViewById(fr.esiea.ail.todolist.R.id.textInput_task_name_update);
+			TextView dateUpdateTaskView = (TextView) getActivity().findViewById(fr.esiea.ail.todolist.R.id.textField_date_update);
+			TextView timeUpdateTaskView = (TextView) getActivity().findViewById(fr.esiea.ail.todolist.R.id.textField_time_update);
 			SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 			
@@ -88,13 +87,14 @@ public class TaskDetailFragment extends Fragment {
 			timeUpdateTaskView.setText(timeFormat.format(mItem.getDate()));
 			
 		}
-		return rootView;
+		return null;
 	}
 
 	public void updateTask(Task taskToUpdate,View view) throws IOException{
 		
 		TaskManagerImpl tmi = null;
 		tmi = new TaskManagerImpl(getActivity(), Context.MODE_APPEND);
+		taskToUpdate.setId(mItem.getId());
 		tmi.update(taskToUpdate);
 	
 	}
