@@ -1,15 +1,23 @@
 package fr.esiea.ail.todolist;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,11 +42,26 @@ import fr.esiea.ail.todolist.util.TaskArrayAdapter;
  * <p>
  * This activity also implements the required {@link TaskListFragment.Callbacks}
  * interface to listen for item selections.
+ * 
+ * 
+ * @author TodoList Team
+ * @since 25/09/2013
+ * @version 1.21
  */
 public class TaskListActivity extends FragmentActivity implements
 		TaskListFragment.Callbacks {
 
 	protected void onCreate(Bundle savedInstanceState) {
+
+		try {
+			startReminderThread();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_list);
@@ -63,7 +86,8 @@ public class TaskListActivity extends FragmentActivity implements
 		// for the selected item ID.
 		final TaskListFragment fa = ((TaskListFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.task_list));
-		Task task = ((TaskArrayAdapter) fa.getListAdapter()).getItem(Integer.parseInt(id));
+		Task task = ((TaskArrayAdapter) fa.getListAdapter()).getItem(Integer
+				.parseInt(id));
 		Intent detailIntent = new Intent(this, TaskDetailActivity.class);
 		detailIntent.putExtra(TaskDetailFragment.ARG_ITEM_ID, task.getId());
 		startActivity(detailIntent);
@@ -86,33 +110,37 @@ public class TaskListActivity extends FragmentActivity implements
 			// Ask if user really want to delete tasks
 			final TaskListFragment fa = ((TaskListFragment) getSupportFragmentManager()
 					.findFragmentById(R.id.task_list));
-			final List<Task> taskToDelete = ((TaskArrayAdapter) fa.getListAdapter())
-					.getDeletedItems();
-			
-			if(taskToDelete.isEmpty()){
-				Toast.makeText(TaskListActivity.this,"You didn't selected datas, try swipe left to right if you want to select a task", Toast.LENGTH_LONG).show();
-			}
-			else{
-			AlertDialog dialog = new AlertDialog.Builder(this).create();
-			dialog.setTitle("Confirmation");
-			dialog.setMessage("Are you sure you want to remove those tasks ?");
-			dialog.setCancelable(false);
-			dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Yes",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int buttonId) {
-							deleteTaskFromAdapter();
-						}
-					});
-			dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "No",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int buttonId) {
-							
-						}
-					});
-			dialog.setIcon(android.R.drawable.ic_dialog_alert);
-			dialog.show();
+			final List<Task> taskToDelete = ((TaskArrayAdapter) fa
+					.getListAdapter()).getDeletedItems();
 
-			return true;
+			if (taskToDelete.isEmpty()) {
+				Toast.makeText(
+						TaskListActivity.this,
+						"You didn't selected datas, try swipe left to right if you want to select a task",
+						Toast.LENGTH_LONG).show();
+			} else {
+				AlertDialog dialog = new AlertDialog.Builder(this).create();
+				dialog.setTitle("Confirmation");
+				dialog.setMessage("Are you sure you want to remove those tasks ?");
+				dialog.setCancelable(false);
+				dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Yes",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int buttonId) {
+								deleteTaskFromAdapter();
+							}
+						});
+				dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "No",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int buttonId) {
+
+							}
+						});
+				dialog.setIcon(android.R.drawable.ic_dialog_alert);
+				dialog.show();
+
+				return true;
 			}
 
 		}
@@ -153,6 +181,51 @@ public class TaskListActivity extends FragmentActivity implements
 				e.printStackTrace();
 			}
 		}
+
+		Toast.makeText(this, "Delete completed", Toast.LENGTH_LONG).show();
 	}
 
+	
+	
+	private void startReminderThread() throws IOException, InterruptedException {
+		Timer timer = new Timer();
+		final TaskManager manager = new TaskManagerImpl(getApplicationContext(), Context.MODE_PRIVATE);
+		timer.schedule(new TimerTask() {
+
+			public void run() {
+
+				List<Task> tasks;
+				try {
+					tasks = manager.list();
+				
+				Calendar c = Calendar.getInstance();
+				c.set(Calendar.HOUR, c.get(Calendar.HOUR) - 1);
+
+				for (Task taskToDo : tasks) {
+					Date d = taskToDo.getDate();
+					if (c.getTimeInMillis()-60000<(d.getTime()) && (d.getTime()<c.getTimeInMillis()+60000) ) {
+						Log.e("myApp", "Tache à notifier");
+						NotificationCompat.Builder mBuilder =
+						        new NotificationCompat.Builder(getApplicationContext())
+						        .setSmallIcon(R.drawable.ic_notification_task_to_do)
+						        .setContentTitle("Remember what you must do today ?")
+						    	.setContentText(taskToDo.getName());
+
+						NotificationManager mNotificationManager =
+						    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+						// mId allows you to update the notification later on.
+						mNotificationManager.notify(5, mBuilder.build());
+					
+					}
+					
+
+				}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		}, 0, 60000);
+	}
 }

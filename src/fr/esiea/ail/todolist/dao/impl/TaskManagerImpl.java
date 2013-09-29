@@ -121,7 +121,6 @@ public class TaskManagerImpl implements TaskManager {
 		for (Task task : tasks) {
 			
 			if (t.getId()==task.getId()) {
-				Log.e("myApp","Delete de "+task.getId()+" "+task.getName()+" "+task.getComment());
 				tasks.remove(task);
 				delete(task);
 				break;
@@ -154,7 +153,7 @@ public class TaskManagerImpl implements TaskManager {
 	 * 
 	 * @return List of tasks
 	 */
-	public List<Task> list() throws IOException {
+	public List<Task>  list() throws IOException {
 
 		int content;
 		FileInputStream fis = context.openFileInput(fichier);

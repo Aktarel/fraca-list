@@ -1,5 +1,6 @@
 package fr.esiea.ail.todolist.model;
 
+import android.annotation.SuppressLint;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,8 +9,10 @@ import java.util.Date;
  * Task is our main model class It represents a Task : something we want to do
  * 
  * @author Todo-List TEAM
+ * @version 1.2
  * 
  */
+@SuppressLint("SimpleDateFormat")
 public class Task {
 
 	/* Id of our Task */

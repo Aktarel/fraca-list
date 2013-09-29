@@ -24,11 +24,16 @@ import fr.esiea.ail.todolist.model.Task;
  * TaskArrayAdapter is the component inside our first main page that group list
  * of Task
  * 
- * OnTouch listener works with 3 steps : >touch screen and keep your finger on
- * the screen >then move >release your finger
+ * OnTouch listener works with 3 steps : 
+ * <ul>
+ * <li>touch screen and keep your finger on</li>
+ *  <li>then move</li>
+ *   <li>release your finger</li>
+ * </ul>
+ * 
  * 
  * @author Akta
- * @since 25/09/2013
+ * @since 24/09/2013
  * 
  */
 public class TaskArrayAdapter extends ArrayAdapter<Task> implements
@@ -40,6 +45,7 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> implements
 	/* user threshold we define as a click */
 	private final int MAX_CLICK_DURATION = 400;
 	private final int MAX_CLICK_DISTANCE = 5;
+
 
 	/*
 	 * clickTime listen whenever the user touch the screen and stop when user

@@ -6,8 +6,11 @@
     <string name="title_actionbar_add">Add Task</string>
     <string name="title_actionbar_delete">Add Task</string>
     <string name="title_task_add">Add Task</string>
+      <string name="title_contextMenu_about" >About Us</string>
+       <string name="title_contextMenu_help" >Help</string>
+    
     <string name="title_delete">Delete</string>
     <string name="pick_time">Set time</string>
     <string name="pick_date">Set a date</string>
-
+  
 </resources>

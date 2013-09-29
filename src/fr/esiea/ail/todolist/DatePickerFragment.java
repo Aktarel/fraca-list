@@ -1,15 +1,11 @@
 package fr.esiea.ail.todolist;
 
 import java.util.Calendar;
-import java.util.Date;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -17,8 +13,9 @@ import android.widget.EditText;
  * 
  * Dialog use in add form You can choose from a date android default component
  * 
- * @author Todolist Team
- * 
+ * @author TodoList Team
+ * @since 26/09/2013
+ * @version 1.0
  */
 public class DatePickerFragment extends DialogFragment implements
 		DatePickerDialog.OnDateSetListener {
@@ -27,8 +24,6 @@ public class DatePickerFragment extends DialogFragment implements
 		// TODO Auto-generated constructor stub
 	}
 
-
-	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		// Use the current date as the default date in the picker
 		int day, month, year;

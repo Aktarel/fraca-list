@@ -14,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 import fr.esiea.ail.todolist.model.Task;
 
 /**
@@ -24,6 +23,12 @@ import fr.esiea.ail.todolist.model.Task;
  * <p>
  * This activity is mostly just a 'shell' activity containing nothing more than
  * a {@link TaskDetailFragment}.
+ * 
+ * Represent our update activity , you can see in details what you wrote before and update if user enter mistakes
+ * @author TodoList Team
+ * @since 25/09/2013
+ * @version 1.1
+ * 
  */
 
 public class TaskDetailActivity extends FragmentActivity {
@@ -82,11 +87,22 @@ public class TaskDetailActivity extends FragmentActivity {
 		return super.onCreateOptionsMenu(menu);
 	}
 
+
+	/**
+	 * 
+	 * Diplay dialog with default time component
+	 * @param v
+	 */
 	public void showTimePickerDialog(View v) {
 		DialogFragment newFragment = new TimePickerFragment();
 		newFragment.show(getFragmentManager(), "timePicker");
 	}
 
+	/**
+	 * 
+	 * Diplay dialog with default date component
+	 * @param v
+	 */
 	public void showDatePickerDialog(View v) {
 		DialogFragment newFragment = new DatePickerFragment();
 		newFragment.show(getFragmentManager(), "datePicker");

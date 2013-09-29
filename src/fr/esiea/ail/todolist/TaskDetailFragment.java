@@ -2,11 +2,10 @@ package fr.esiea.ail.todolist;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,9 @@ import fr.esiea.ail.todolist.model.Task;
  * A fragment representing a single Task detail screen. This fragment is either
  * contained in a {@link TaskListActivity} in two-pane mode (on tablets) or a
  * {@link TaskDetailActivity} on handsets.
+ * @author TodoList Team
+ * @since 25/09/2013
+ * @version 1.1
  */
 public class TaskDetailFragment extends Fragment {
 	/**
@@ -69,6 +71,7 @@ public class TaskDetailFragment extends Fragment {
 		}
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Show the dummy content as text in a TextView.

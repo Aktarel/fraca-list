@@ -21,6 +21,10 @@ import fr.esiea.ail.todolist.util.TaskArrayAdapter;
  * <p>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
+ * 
+ * @author TodoList Team
+ * @since 25/09/2013
+ * @version 1.21
  */
 public class TaskListFragment extends ListFragment {
 
@@ -34,6 +38,7 @@ public class TaskListFragment extends ListFragment {
 	 * The fragment's current callback object, which is notified of list item
 	 * clicks.
 	 */
+	@SuppressWarnings("unused")
 	private Callbacks mCallbacks = sDummyCallbacks;
 
 	/**

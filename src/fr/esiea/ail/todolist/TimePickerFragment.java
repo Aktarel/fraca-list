@@ -7,7 +7,6 @@ import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
@@ -15,7 +14,9 @@ import android.widget.TimePicker;
  * 
  * Dialog use in add form You can choose from a time
  * 
- * @author Todolist Team
+ * @author TodoList Team
+ * @since 26/09/2013
+ * @version 1.0
  * 
  */
 public class TimePickerFragment extends DialogFragment implements

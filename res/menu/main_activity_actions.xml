@@ -12,6 +12,18 @@
          android:showAsAction="ifRoom" 
           >
     </item>
+    <item android:id="@+id/button_contextMenu_help"
+        android:icon="@drawable/ic_action_help"
+        android:title="@string/title_contextMenu_help" 
+         android:showAsAction="collapseActionView"
+          >
+    </item>
+     <item android:id="@+id/button_contextMenu_about"
+        android:icon="@drawable/ic_action_about"
+        android:title="@string/title_contextMenu_about" 
+         android:showAsAction="collapseActionView"
+          >
+    </item>
     
 
 </menu>

@@ -1,11 +1,6 @@
 package fr.esiea.ail.todolist;
 
-import java.io.IOException;
-
-import fr.esiea.ail.todolist.dao.impl.TaskManagerImpl;
-import fr.esiea.ail.todolist.model.Task;
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +10,10 @@ import android.view.ViewGroup;
  * A fragment representing a single Task detail screen. This fragment is either
  * contained in a {@link TaskListActivity} in two-pane mode (on tablets) or a
  * {@link TaskDetailActivity} on handsets.
+ * 
+ * @author TodoList Team
+ * @since 24/09/2013
+ * @version 1.12
  */
 public class TaskAddFragment extends Fragment{
 	/**

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import android.annotation.SuppressLint;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
@@ -27,13 +27,17 @@ import fr.esiea.ail.todolist.model.Task;
  * <p>
  * This activity is mostly just a 'shell' activity containing nothing more than
  * a {@link TaskDetailFragment}.
+ * 
+ * @author TodoList Team
+ * @since 24/09/2013
+ * @version 1.12
  */
 public class TaskAddActivity extends FragmentActivity {
 
 	private SimpleDateFormat timeFormat;
 	private SimpleDateFormat dateFormat;
 
-	@Override
+	@SuppressLint("SimpleDateFormat")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_add);
